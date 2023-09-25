@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 
 // Components
 import Sidebar from "@/components/shared/Sidebar";
+import Container from "@/components/shared/Container";
+import Navbar from "@/components/shared/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +24,11 @@ const Layout: FC<PropTypes> = ({ children }) => {
     <html>
       <body className={inter.className}>
         <main>
-          <Sidebar />
-          <div>{children}</div>
+          <Navbar />
+          <Container className="mt-[20px] flex flex-row gap-[20px]">
+            <Sidebar className="w-[200px]" />
+            <div className="flex-1">{children}</div>
+          </Container>
         </main>
       </body>
     </html>
