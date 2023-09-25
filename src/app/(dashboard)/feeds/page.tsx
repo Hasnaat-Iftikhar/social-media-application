@@ -1,9 +1,5 @@
-import { FC } from "react";
-
-interface pageProps {}
-
-const page: FC<pageProps> = ({}) => {
+const Page = () => {
   return <div>Feeds</div>;
 };
 
-export default page;
+export default Page;

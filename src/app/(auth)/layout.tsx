@@ -1,18 +1,18 @@
 import { FC, ReactNode } from "react";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 
 // Components
 import Container from "@/components/shared/Container";
 
+const inter = Inter({ subsets: ["latin"] });
+
 export const metadata: Metadata = {
   title: "Auth | Social media application",
-  description: "Get ready to connect with some amazing guys!",
+  description:
+    "elcome to our social media platform where you can connect with friends, share moments, and explore the world. Join the community today!",
 };
-
-const inter = Inter({ subsets: ["latin"] });
 
 interface PropTypes {
   children: ReactNode;
