@@ -76,7 +76,7 @@ const Page: FC<PropTypes> = ({ user }) => {
       style={{
         boxShadow: "rgba(0, 0, 0, 0.16) 0px 24px 48px",
       }}
-      className="bg-white py-[38px] px-[32px] rounded-[20px]"
+      className="bg-white w-[400px] py-[38px] px-[32px] rounded-[20px]"
     >
       <div>
         <h3 className="onboardingForm_title">Onboarding</h3>
