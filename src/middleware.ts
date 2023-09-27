@@ -1,24 +1,13 @@
-import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
-import ROUTES from "./constants/routes";
-import { NextResponse } from "next/server";
+import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
+  // An array of public routes that don't require authentication.
   publicRoutes: ["/api/webhook/clerk", "/"],
-  ignoredRoutes: ["/api/webhook/clerk", "/onboarding"],
-  afterAuth(auth, req) {
-    // handle users who aren't authenticated
-    if (!auth.userId && !auth.isPublicRoute) {
-      return redirectToSignIn({ returnBackUrl: req.url });
-    }
 
-    // redirect them to feeds page
-    if (auth.userId && !auth.orgId && req.nextUrl.pathname !== ROUTES.FEEDS) {
-      const orgSelection = new URL(ROUTES.FEEDS, req.url);
-      return NextResponse.redirect(orgSelection);
-    }
-  },
+  // An array of routes to be ignored by the authentication middleware.
+  ignoredRoutes: ["/api/webhook/clerk"],
 });
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };

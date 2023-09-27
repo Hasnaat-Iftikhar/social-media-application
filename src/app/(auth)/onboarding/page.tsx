@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+import { fetchUser } from "@/lib/actions/user.actions";
 
 // Components
 import AccountProfileForm from "@/components/forms/AccountProfileForm";
@@ -9,7 +12,25 @@ export const metadata: Metadata = {
     "Welcome to our social media platform where you can connect with friends, share moments, and explore the world. Join the community today!",
 };
 
-const Page = () => {
+const Page = async () => {
+  const user = await currentUser();
+  if (!user) return redirect("/sign-in");
+
+  const userInfo = await fetchUser(user.id);
+  console.log("User Info", userInfo);
+  if (userInfo?.onboarded) redirect("/feeds");
+
+  const userData = {
+    id: user.id,
+    objectId: userInfo?._id,
+    username: userInfo ? userInfo?.username : user.username,
+    name: userInfo ? userInfo?.name : user.firstName ?? "",
+    bio: userInfo ? userInfo?.bio : "",
+    image: userInfo ? userInfo?.image : user.imageUrl,
+  };
+
+  console.log("User Data", userData);
+
   return (
     <div
       style={{
@@ -22,17 +43,7 @@ const Page = () => {
         <p className="onboardingForm_subTitle">
           Please fill out that form to onboard
         </p>
-        <AccountProfileForm
-          user={{
-            id: "",
-            name: "",
-            image: "",
-            bio: "",
-            objectId: "",
-            username: "",
-          }}
-          buttonText="Continue"
-        />
+        <AccountProfileForm user={userData} buttonText="Continue" />
       </div>
     </div>
   );

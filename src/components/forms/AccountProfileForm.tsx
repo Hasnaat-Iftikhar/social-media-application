@@ -1,11 +1,17 @@
 "use client";
 
-import { ChangeEvent, FC, useState } from "react";
+import { FC, useState } from "react";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 
+// React hook form with zod validation
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import UserValidation, { AccountFormValues } from "@/lib/validations/user";
+
+// Libs
+import { updateUser } from "@/lib/actions/user.actions";
+import { UploadButton } from "@/lib/uploadthing";
 
 // Components
 import {
@@ -35,42 +41,41 @@ interface PropTypes {
 }
 
 const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [image, setImage] = useState<string>(user?.image ? user?.image : "");
+  const [imageUploading, setImageUploading] = useState<boolean>(false);
+
+  const pathname = usePathname();
+  const router = useRouter();
 
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(UserValidation),
     defaultValues: {
-      profile_photo: user?.image ? user.image : "",
       name: user?.name ? user.name : "",
       username: user?.username ? user.username : "",
       bio: user?.bio ? user.bio : "",
     },
   });
 
-  const handleImage = (
-    e: ChangeEvent<HTMLInputElement>,
-    fieldChange: (value: string) => void
-  ) => {
-    e.preventDefault();
-
-    const fileReader = new FileReader();
-
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      setFiles(Array.from(e.target.files));
-
-      if (!file.type.includes("image")) return;
-
-      fileReader.onload = async (event) => {
-        const imageDataUrl = event.target?.result?.toString() || "";
-        fieldChange(imageDataUrl);
-      };
-
-      fileReader.readAsDataURL(file);
+  async function onSubmit(values: AccountFormValues) {
+    if (image) {
+      values.image = image;
     }
-  };
 
-  function onSubmit(data: AccountFormValues) {}
+    await updateUser({
+      userId: user.id,
+      name: values.name,
+      username: values.username,
+      image: image,
+      bio: values.bio,
+      path: pathname,
+    });
+
+    if (pathname === "/profile/edit") {
+      router.back();
+    } else {
+      router.push("/");
+    }
+  }
 
   return (
     <Form {...form}>
@@ -80,14 +85,14 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
       >
         <FormField
           control={form.control}
-          name="profile_photo"
-          render={({ field }) => (
+          name="image"
+          render={() => (
             <FormItem>
               <div className="flex flex-row items-end gap-2">
                 <FormLabel className="relative w-[70px] h-[70px] bg-primary-HOVER flex justify-center items-center rounded-[10px] overflow-hidden">
-                  {field.value ? (
+                  {image ? (
                     <Image
-                      src={field.value}
+                      src={image}
                       alt="profile_icon"
                       fill
                       priority
@@ -103,15 +108,30 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
                     </div>
                   )}
                 </FormLabel>
-                <FormControl className="flex-1 text-base-semibold text-black">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    placeholder="Add profile photo"
-                    className="account-form_image-input"
-                    onChange={(e) => handleImage(e, field.onChange)}
+                <div className="relative flex-1 text-base-semibold text-black">
+                  <UploadButton
+                    className="opacity-0 absolute top-0 left-0 right-0 bottom-0"
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(res: any) => {
+                      setImageUploading(false);
+                      if (res[0].fileUrl) {
+                        console.log(res[0]);
+                        setImage(res[0].fileUrl);
+                      }
+                    }}
+                    onUploadBegin={() => {
+                      setImageUploading(true);
+                    }}
+                    onUploadError={(error: Error) => {
+                      alert(`ERROR! ${error.message}`);
+                    }}
                   />
-                </FormControl>
+                  <Input
+                    readOnly={true}
+                    value={image ? image : "Please select an image"}
+                  />
+                  {imageUploading && <label>Please wait...</label>}
+                </div>
               </div>
             </FormItem>
           )}
@@ -165,7 +185,7 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
           )}
         />
         <Button className="uppercase font-semibold text-[11px] hover:bg-primary-HOVER">
-          Continue
+          {buttonText}
         </Button>
       </form>
     </Form>
