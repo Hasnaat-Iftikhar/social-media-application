@@ -18,7 +18,7 @@ const Page = async () => {
 
   const userInfo = await fetchUser(user.id);
   console.log("User Info", userInfo);
-  if (userInfo?.onboarded) redirect("/feeds");
+  if (userInfo && userInfo?.onboarded) redirect("/feeds");
 
   const userData = {
     id: user.id,

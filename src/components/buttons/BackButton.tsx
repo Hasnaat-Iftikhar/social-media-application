@@ -8,7 +8,7 @@ import { Inter } from "next/font/google";
 import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["cyrillic"] });
+const inter = Inter({ subsets: ["latin"] });
 
 interface BackButtonProps {
   className?: string;

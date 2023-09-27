@@ -6,7 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["cyrillic"] });
+const inter = Inter({ subsets: ["latin"] });
 
 const buttonVariants = cva(
   cn(

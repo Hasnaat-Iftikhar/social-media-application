@@ -7,7 +7,7 @@ import Container from "@/components/shared/Container";
 import Navbar from "@/components/shared/Navbar";
 import CommunitySidebar from "@/components/shared/CommunitySidebar";
 
-const inter = Inter({ subsets: ["cyrillic"] });
+const inter = Inter({ subsets: ["latin"] });
 
 interface PropTypes {
   children: ReactNode;

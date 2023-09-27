@@ -8,8 +8,11 @@ export default async function Home() {
   if (!user) return redirect("/sign-in");
 
   const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboarded) redirect("/onboarding");
-  if (userInfo?.onboarded) redirect("/feeds");
+  if (!userInfo?.onboarded) {
+    redirect("/onboarding");
+  } else {
+    redirect("/feeds");
+  }
 
   return (
     <main>

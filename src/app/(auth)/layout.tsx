@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 import Container from "@/components/shared/Container";
 import BackButton from "@/components/buttons/BackButton";
 
-const inter = Inter({ subsets: ["cyrillic"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Auth | Social media application",
