@@ -26,7 +26,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 
 // Icons
-import { User2 } from "lucide-react";
+import { Loader, User2 } from "lucide-react";
 
 interface PropTypes {
   user: {
@@ -108,9 +108,9 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
                     </div>
                   )}
                 </FormLabel>
-                <div className="relative flex-1 text-base-semibold text-black">
+                <div className="relative flex-1 text-base-semibold text-black z-[10] flex gap-[8px]">
                   <UploadButton
-                    className="opacity-0 absolute top-0 left-0 right-0 bottom-0"
+                    className="absolute top-0 left-0 right-0 bottom-0 opacity-0"
                     endpoint="imageUploader"
                     onClientUploadComplete={(res: any) => {
                       setImageUploading(false);
@@ -127,10 +127,15 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
                     }}
                   />
                   <Input
+                    className="flex-1"
                     readOnly={true}
                     value={image ? image : "Please select an image"}
                   />
-                  {imageUploading && <label>Please wait...</label>}
+                  {imageUploading && (
+                    <div className="w-[40px] h-[40px] flex justify-center items-center border border-[rgba(0,0,0,0.1)] rounded-[6px]">
+                      <Loader width={14} height={14} />
+                    </div>
+                  )}
                 </div>
               </div>
             </FormItem>

@@ -1,11 +1,6 @@
 import { FC, ReactNode } from "react";
 import { Inter } from "next/font/google";
 
-// Auth
-import { currentUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-import { fetchUser } from "@/lib/actions/user.actions";
-
 // Components
 import Sidebar from "@/components/shared/Sidebar";
 import Container from "@/components/shared/Container";
@@ -19,12 +14,6 @@ interface PropTypes {
 }
 
 const Layout: FC<PropTypes> = async ({ children }) => {
-  const user = await currentUser();
-  if (!user) return redirect("/sign-in");
-
-  const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboarded) redirect("/onboarding");
-
   return (
     <html>
       <body className={inter.className}>

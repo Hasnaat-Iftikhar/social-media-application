@@ -22,10 +22,10 @@ interface PropTypes {
 
 const Layout: FC<PropTypes> = ({ children }) => {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <main>
-          <ClerkProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <main>
             <header className="fixed top-[20px] w-full">
               <Container>
                 <BackButton />
@@ -46,10 +46,10 @@ const Layout: FC<PropTypes> = ({ children }) => {
                 {children}
               </div>
             </section>
-          </ClerkProvider>
-        </main>
-      </body>
-    </html>
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 };
 
