@@ -57,11 +57,7 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
   });
 
   async function onSubmit(values: AccountFormValues) {
-    if (image) {
-      values.image = image;
-    }
-
-    await updateUser({
+    const res = await updateUser({
       userId: user.id,
       name: values.name,
       username: values.username,
@@ -70,10 +66,12 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
       path: pathname,
     });
 
+    console.log("res", res);
+
     if (pathname === "/profile/edit") {
       router.back();
     } else {
-      router.push("/");
+      router.push("/feeds");
     }
   }
 
@@ -83,64 +81,59 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="mt-[20px] flex flex-col gap-[18px]"
       >
-        <FormField
+        <div className="flex flex-row items-end gap-2">
+          <FormLabel className="relative w-[70px] h-[70px] bg-primary-HOVER flex justify-center items-center rounded-[10px] overflow-hidden">
+            {image ? (
+              <Image
+                src={image}
+                alt="profile_icon"
+                fill
+                priority
+                className="object-contain"
+              />
+            ) : (
+              <div className="w-[22px] h-[22px]">
+                <User2 width="100%" height="100%" className="text-black" />
+              </div>
+            )}
+          </FormLabel>
+          <div className="relative flex-1 text-base-semibold text-black z-[10] flex gap-[8px]">
+            <UploadButton
+              className="absolute top-0 left-0 right-0 bottom-0 opacity-0"
+              endpoint="imageUploader"
+              onClientUploadComplete={(res: any) => {
+                setImageUploading(false);
+                if (res[0].fileUrl) {
+                  setImage(res[0].fileUrl);
+                }
+              }}
+              onUploadBegin={() => {
+                setImageUploading(true);
+              }}
+              onUploadError={(error: Error) => {
+                alert(`ERROR! ${error.message}`);
+              }}
+            />
+            <Input
+              className="flex-1"
+              readOnly={true}
+              value={image ? image : "Please select an image"}
+            />
+            {imageUploading && (
+              <div className="w-[40px] h-[40px] flex justify-center items-center border border-[rgba(0,0,0,0.1)] rounded-[6px]">
+                <Loader width={14} height={14} />
+              </div>
+            )}
+          </div>
+        </div>
+        {/* <FormField
           control={form.control}
           name="image"
           render={() => (
-            <FormItem>
-              <div className="flex flex-row items-end gap-2">
-                <FormLabel className="relative w-[70px] h-[70px] bg-primary-HOVER flex justify-center items-center rounded-[10px] overflow-hidden">
-                  {image ? (
-                    <Image
-                      src={image}
-                      alt="profile_icon"
-                      fill
-                      priority
-                      className="object-contain"
-                    />
-                  ) : (
-                    <div className="w-[22px] h-[22px]">
-                      <User2
-                        width="100%"
-                        height="100%"
-                        className="text-black"
-                      />
-                    </div>
-                  )}
-                </FormLabel>
-                <div className="relative flex-1 text-base-semibold text-black z-[10] flex gap-[8px]">
-                  <UploadButton
-                    className="absolute top-0 left-0 right-0 bottom-0 opacity-0"
-                    endpoint="imageUploader"
-                    onClientUploadComplete={(res: any) => {
-                      setImageUploading(false);
-                      if (res[0].fileUrl) {
-                        console.log(res[0]);
-                        setImage(res[0].fileUrl);
-                      }
-                    }}
-                    onUploadBegin={() => {
-                      setImageUploading(true);
-                    }}
-                    onUploadError={(error: Error) => {
-                      alert(`ERROR! ${error.message}`);
-                    }}
-                  />
-                  <Input
-                    className="flex-1"
-                    readOnly={true}
-                    value={image ? image : "Please select an image"}
-                  />
-                  {imageUploading && (
-                    <div className="w-[40px] h-[40px] flex justify-center items-center border border-[rgba(0,0,0,0.1)] rounded-[6px]">
-                      <Loader width={14} height={14} />
-                    </div>
-                  )}
-                </div>
-              </div>
-            </FormItem>
+            <FormItem> */}
+        {/* </FormItem>
           )}
-        />
+        /> */}
         <FormField
           control={form.control}
           name="name"
@@ -189,7 +182,10 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
             </FormItem>
           )}
         />
-        <Button className="uppercase font-semibold text-[11px] hover:bg-primary-HOVER">
+        <Button
+          type="submit"
+          className="uppercase font-semibold text-[11px] hover:bg-primary-HOVER"
+        >
           {buttonText}
         </Button>
       </form>

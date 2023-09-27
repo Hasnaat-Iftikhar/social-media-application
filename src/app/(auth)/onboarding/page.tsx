@@ -23,10 +23,12 @@ const Page = async () => {
   const userData = {
     id: user.id,
     objectId: userInfo?._id,
-    username: userInfo ? userInfo?.username : user.username,
+    username: userInfo
+      ? userInfo?.username
+      : user.firstName?.toLowerCase() ?? "",
     name: userInfo ? userInfo?.name : user.firstName ?? "",
     bio: userInfo ? userInfo?.bio : "",
-    image: userInfo ? userInfo?.image : "",
+    image: userInfo ? userInfo?.image : user.imageUrl ?? "",
   };
 
   console.log("User Data", userData);

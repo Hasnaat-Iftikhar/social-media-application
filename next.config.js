@@ -6,6 +6,12 @@ const nextConfig = {
   },
   images: {
     domains: ["utfs.io", "uploadthing.com", "lh3.googleusercontent.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "img.clerk.com",
+      },
+    ],
   },
 };
 
