@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["cyrillic"] });
 export const metadata: Metadata = {
   title: "Auth | Social media application",
   description:
-    "elcome to our social media platform where you can connect with friends, share moments, and explore the world. Join the community today!",
+    "Welcome to our social media platform where you can connect with friends, share moments, and explore the world. Join the community today!",
 };
 
 interface PropTypes {
