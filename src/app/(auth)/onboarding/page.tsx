@@ -17,7 +17,6 @@ const Page = async () => {
   if (!user) return redirect("/sign-in");
 
   const userInfo = await fetchUser(user.id);
-  console.log("User Info", userInfo);
   if (userInfo && userInfo?.onboarded) redirect("/feeds");
 
   const userData = {
@@ -30,8 +29,6 @@ const Page = async () => {
     bio: userInfo ? userInfo?.bio : "",
     image: userInfo ? userInfo?.image : user.imageUrl ?? "",
   };
-
-  console.log("User Data", userData);
 
   return (
     <div
