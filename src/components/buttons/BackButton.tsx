@@ -2,10 +2,13 @@
 
 import { FC } from "react";
 import { useRouter } from "next/navigation";
+import { Inter } from "next/font/google";
 
 // Icons
 import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const inter = Inter({ subsets: ["cyrillic"] });
 
 interface BackButtonProps {
   className?: string;
@@ -43,7 +46,13 @@ const BackButton: FC<BackButtonProps> = ({
         width={18}
         height={18}
       />{" "}
-      <span className={cn(textClassName, "text-black text-[16px] font-medium")}>
+      <span
+        className={cn(
+          textClassName,
+          inter.className,
+          "text-black text-[16px] font-medium"
+        )}
+      >
         {customText ? customText : "Go Back"}
       </span>
     </button>

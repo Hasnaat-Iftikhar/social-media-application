@@ -97,3 +97,24 @@
 .cl-internal-b3fm6y {
   display: none;
 }
+
+/* Class groups */
+.onboardingForm_title {
+  @apply text-[20px] leading-[1.5] text-black font-semibold;
+}
+
+.onboardingForm_subTitle {
+  @apply text-[16px] leading-[1.25] text-[#000000a6];
+}
+
+.onboardingForm_group {
+  @apply flex w-full flex-col gap-[8px];
+}
+
+.onboardingForm_label {
+  @apply text-[13px] font-medium;
+}
+
+.onboardingForm_input {
+  @apply border border-[#00000029];
+}
