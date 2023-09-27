@@ -175,7 +175,7 @@ const Page: FC<PropTypes> = ({ user }) => {
               </FormItem>
             )}
           />
-          <Button className="uppercase font-semibold text-[11px]">
+          <Button className="uppercase font-semibold text-[11px] hover:bg-primary-HOVER">
             Continue
           </Button>
         </form>
