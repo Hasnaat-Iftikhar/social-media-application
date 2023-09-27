@@ -31,9 +31,10 @@ interface PropTypes {
     bio: string;
     image: string;
   };
+  buttonText: string;
 }
 
-const OnboardingForm: FC<PropTypes> = ({ user }) => {
+const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
   const [files, setFiles] = useState<File[]>([]);
 
   const form = useForm<AccountFormValues>({
@@ -171,4 +172,4 @@ const OnboardingForm: FC<PropTypes> = ({ user }) => {
   );
 };
 
-export default OnboardingForm;
+export default AccountProfileForm;

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 // Components
-import OnboardingForm from "@/components/forms/OnboardingForm";
+import AccountProfileForm from "@/components/forms/AccountProfileForm";
 
 export const metadata: Metadata = {
   title: "Onboarding | Social media application",
@@ -22,7 +22,7 @@ const Page = () => {
         <p className="onboardingForm_subTitle">
           Please fill out that form to onboard
         </p>
-        <OnboardingForm
+        <AccountProfileForm
           user={{
             id: "",
             name: "",
@@ -31,6 +31,7 @@ const Page = () => {
             objectId: "",
             username: "",
           }}
+          buttonText="Continue"
         />
       </div>
     </div>
