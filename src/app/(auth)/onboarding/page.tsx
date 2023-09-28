@@ -11,9 +11,6 @@ import AccountProfileForm from "@/components/forms/AccountProfileForm";
 // Routes
 import ROUTES from "@/constants/routes";
 
-// Types
-import AccountProfileType from "@/lib/types/accountProfile.type";
-
 export const metadata: Metadata = {
   title: "Onboarding | Social media application",
   description:
@@ -28,9 +25,12 @@ const Page = async () => {
   } else if (res.status === 404) {
     return redirect(ROUTES.SIGNIN);
   } else if (res.status === 422) {
-    let user: AccountProfileType | null = null;
+    const data = await res.json();
 
-    user = await res.json();
+    const user = {
+      id: data.data.userId,
+    };
+
     return (
       <AuthLayout>
         <div

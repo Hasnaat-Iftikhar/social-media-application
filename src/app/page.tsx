@@ -5,6 +5,7 @@ import ROUTES from "@/constants/routes";
 
 export default async function Home() {
   const res = await fetchUser();
+
   if (res.status === 200) {
     redirect(ROUTES.FEEDS);
   } else if (res.status === 404) {

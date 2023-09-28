@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import DashboardLayout from "@/components/layouts/DashboardLayout";
 
 export const metadata: Metadata = {
   title: "Feeds | Social Media Application",
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 const Page = () => {
-  return <div></div>;
+  return <DashboardLayout>Feeds</DashboardLayout>;
 };
 
 export default Page;

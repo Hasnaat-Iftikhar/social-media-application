@@ -21,8 +21,8 @@ export async function fetchUser() {
 
     const user = await User.findOne({ id: clerkUser.id });
 
-    if (!user.onboarded) {
-      return createErrorResponse("User not onboarded", 422);
+    if (!user || !user.onboarded) {
+      return createErrorResponse({ userId: clerkUser.id }, 422);
     }
 
     const successResponse = {

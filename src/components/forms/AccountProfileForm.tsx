@@ -32,12 +32,12 @@ import { Loader, User2 } from "lucide-react";
 import AccountProfileType from "@/lib/types/accountProfile.type";
 
 interface PropTypes {
-  user: AccountProfileType | null;
+  user: AccountProfileType | { id: string };
   buttonText: string;
 }
 
 const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
-  const [image, setImage] = useState<string>(user?.image ? user?.image : "");
+  const [image, setImage] = useState<string>("image" in user ? user.image : "");
   const [imageUploading, setImageUploading] = useState<boolean>(false);
 
   const pathname = usePathname();
@@ -120,14 +120,6 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
             )}
           </div>
         </div>
-        {/* <FormField
-          control={form.control}
-          name="image"
-          render={() => (
-            <FormItem> */}
-        {/* </FormItem>
-          )}
-        /> */}
         <FormField
           control={form.control}
           name="name"
