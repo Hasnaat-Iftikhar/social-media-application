@@ -15,7 +15,7 @@ interface PropTypes {
   children: ReactNode;
 }
 
-const Layout: FC<PropTypes> = ({ children }) => {
+const AuthLayout: FC<PropTypes> = ({ children }) => {
   return (
     <main>
       <header className="fixed top-[20px] w-full">
@@ -42,4 +42,4 @@ const Layout: FC<PropTypes> = ({ children }) => {
   );
 };
 
-export default Layout;
+export default AuthLayout;
