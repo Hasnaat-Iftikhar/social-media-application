@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+
+// Libs
 import { fetchUser } from "@/lib/actions/user.actions";
 
 // Components
