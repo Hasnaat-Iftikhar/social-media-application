@@ -8,6 +8,9 @@ import { fetchUser } from "@/lib/actions/user.actions";
 // Components
 import AccountProfileForm from "@/components/forms/AccountProfileForm";
 
+// Routes
+import ROUTES from "@/constants/routes";
+
 export const metadata: Metadata = {
   title: "Onboarding | Social media application",
   description:
@@ -16,10 +19,10 @@ export const metadata: Metadata = {
 
 const Page = async () => {
   const user = await currentUser();
-  if (!user) return redirect("/sign-in");
+  if (!user) return redirect(ROUTES.SIGNIN);
 
   const userInfo = await fetchUser(user.id);
-  if (userInfo && userInfo?.onboarded) redirect("/feeds");
+  if (userInfo && userInfo?.onboarded) redirect(ROUTES.FEEDS);
 
   const userData = {
     id: user.id,
