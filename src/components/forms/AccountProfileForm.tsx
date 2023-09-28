@@ -28,15 +28,11 @@ import { Button } from "@/components/ui/Button";
 // Icons
 import { Loader, User2 } from "lucide-react";
 
+// Types
+import AccountProfileType from "@/lib/types/accountProfile.type";
+
 interface PropTypes {
-  user: {
-    id: string;
-    objectId: string;
-    username: string;
-    name: string;
-    bio: string;
-    image: string;
-  };
+  user: AccountProfileType | null;
   buttonText: string;
 }
 
@@ -57,16 +53,14 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
   });
 
   async function onSubmit(values: AccountFormValues) {
-    const res = await updateUser({
-      userId: user.id,
+    await updateUser({
+      userId: user?.id,
       name: values.name,
       username: values.username,
       image: image,
       bio: values.bio,
       path: pathname,
     });
-
-    console.log("res", res);
 
     if (pathname === "/profile/edit") {
       router.back();

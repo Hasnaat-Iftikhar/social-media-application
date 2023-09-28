@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 // Libs
 import { fetchUser } from "@/lib/actions/user.actions";
 
 // Components
+import AuthLayout from "@/components/layouts/AuthLayout";
 import AccountProfileForm from "@/components/forms/AccountProfileForm";
 
 // Routes
 import ROUTES from "@/constants/routes";
+
+// Types
+import AccountProfileType from "@/lib/types/accountProfile.type";
 
 export const metadata: Metadata = {
   title: "Onboarding | Social media application",
@@ -18,39 +21,35 @@ export const metadata: Metadata = {
 };
 
 const Page = async () => {
-  const user = await currentUser();
-  if (!user) return redirect(ROUTES.SIGNIN);
+  const res = await fetchUser();
 
-  const userInfo = await fetchUser(user.id);
-  if (userInfo && userInfo?.onboarded) redirect(ROUTES.FEEDS);
+  if (res.status === 200) {
+    return redirect(ROUTES.FEEDS);
+  } else if (res.status === 404) {
+    return redirect(ROUTES.SIGNIN);
+  } else if (res.status === 422) {
+    let user: AccountProfileType | null = null;
 
-  const userData = {
-    id: user.id,
-    objectId: userInfo?._id,
-    username: userInfo
-      ? userInfo?.username
-      : user.firstName?.toLowerCase() ?? "",
-    name: userInfo ? userInfo?.name : user.firstName ?? "",
-    bio: userInfo ? userInfo?.bio : "",
-    image: userInfo ? userInfo?.image : user.imageUrl ?? "",
-  };
-
-  return (
-    <div
-      style={{
-        boxShadow: "rgba(0, 0, 0, 0.16) 0px 24px 48px",
-      }}
-      className="bg-white w-[400px] py-[38px] px-[32px] rounded-[20px]"
-    >
-      <div>
-        <h3 className="onboardingForm_title">Onboarding</h3>
-        <p className="onboardingForm_subTitle">
-          Please fill out that form to onboard
-        </p>
-        <AccountProfileForm user={userData} buttonText="Continue" />
-      </div>
-    </div>
-  );
+    user = await res.json();
+    return (
+      <AuthLayout>
+        <div
+          style={{
+            boxShadow: "rgba(0, 0, 0, 0.16) 0px 24px 48px",
+          }}
+          className="bg-white w-[400px] py-[38px] px-[32px] rounded-[20px]"
+        >
+          <div>
+            <h3 className="onboardingForm_title">Onboarding</h3>
+            <p className="onboardingForm_subTitle">
+              Please fill out that form to onboard
+            </p>
+            <AccountProfileForm user={user} buttonText="Continue" />
+          </div>
+        </div>
+      </AuthLayout>
+    );
+  }
 };
 
 export default Page;

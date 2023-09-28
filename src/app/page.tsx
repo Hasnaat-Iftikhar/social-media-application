@@ -1,16 +1,15 @@
 // Auth
-import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { fetchUser } from "@/lib/actions/user.actions";
+import ROUTES from "@/constants/routes";
 
 export default async function Home() {
-  const user = await currentUser();
-  if (!user) return redirect("/sign-in");
-
-  const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboarded) {
-    return redirect("/onboarding");
-  } else {
-    return redirect("/feeds");
+  const res = await fetchUser();
+  if (res.status === 200) {
+    redirect(ROUTES.FEEDS);
+  } else if (res.status === 404) {
+    redirect(ROUTES.SIGNIN);
+  } else if (res.status === 422) {
+    redirect(ROUTES.ONBOARDING);
   }
 }
