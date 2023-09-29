@@ -21,7 +21,7 @@ const Page = async () => {
   const res = await fetchUser();
 
   if (res.status === 200) {
-    return redirect(ROUTES.FEEDS);
+    return redirect(ROUTES.FEED);
   } else if (res.status === 404) {
     return redirect(ROUTES.SIGNIN);
   } else if (res.status === 422) {

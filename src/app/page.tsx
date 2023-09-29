@@ -7,7 +7,7 @@ export default async function Home() {
   const res = await fetchUser();
 
   if (res.status === 200) {
-    redirect(ROUTES.FEEDS);
+    redirect(ROUTES.FEED);
   } else if (res.status === 404) {
     redirect(ROUTES.SIGNIN);
   } else if (res.status === 422) {

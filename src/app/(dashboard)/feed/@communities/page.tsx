@@ -1,5 +1,5 @@
-import { FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { FC, ReactNode } from "react";
 import Link from "next/link";
 
 const communities = [
@@ -45,22 +45,9 @@ const InfoBox: FC<{
   );
 };
 
-interface CommunitySidebarProps {
-  className?: string;
-}
-
-const CommunitySidebar: FC<CommunitySidebarProps> = ({
-  className = "",
-  ...props
-}) => {
+const Page = () => {
   return (
-    <nav
-      className={cn(
-        "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
-        className
-      )}
-      {...props}
-    >
+    <nav className="w-[250px] flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
       <div className="flex flex-col gap-[30px]">
         <InfoBox label="Communities">
           {communities.map((item) => (
@@ -81,4 +68,4 @@ const CommunitySidebar: FC<CommunitySidebarProps> = ({
   );
 };
 
-export default CommunitySidebar;
+export default Page;

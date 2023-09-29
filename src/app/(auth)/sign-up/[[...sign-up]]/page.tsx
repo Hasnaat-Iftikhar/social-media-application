@@ -8,7 +8,7 @@ export default async function Page() {
   const res = await fetchUser();
 
   if (res.status === 200) {
-    return redirect(ROUTES.FEEDS);
+    return redirect(ROUTES.FEED);
   } else if (res.status === 404) {
     return (
       <AuthLayout>

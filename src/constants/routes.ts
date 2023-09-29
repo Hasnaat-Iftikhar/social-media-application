@@ -3,7 +3,7 @@ const ROUTES = {
   ONBOARDING: "/onboarding",
   SIGNIN: "/sign-in",
   SIGNUP: "/sign-up",
-  FEEDS: "/feeds",
+  FEED: "/feed",
 };
 
 export default ROUTES;
