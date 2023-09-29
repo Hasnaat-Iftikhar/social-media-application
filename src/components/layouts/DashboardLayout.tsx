@@ -1,13 +1,17 @@
 import { FC, ReactNode } from "react";
+import { redirect } from "next/navigation";
 
 // Components
 import Sidebar from "@/components/shared/Sidebar";
 import Container from "@/components/shared/Container";
 import Navbar from "@/components/shared/Navbar";
 import CommunitySidebar from "@/components/shared/CommunitySidebar";
+
+// Routes
 import ROUTES from "@/constants/routes";
+
+// Libs
 import { fetchUser } from "@/lib/actions/user.actions";
-import { redirect } from "next/navigation";
 
 interface PropTypes {
   children: ReactNode;
