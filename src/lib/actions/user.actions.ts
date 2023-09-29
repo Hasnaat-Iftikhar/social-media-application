@@ -9,6 +9,9 @@ import { currentUser } from "@clerk/nextjs";
 // Utils
 import { createErrorResponse } from "../utils";
 
+// Types
+import AccountProfileType from "../types/accountProfile.type";
+
 export async function fetchUser() {
   try {
     connectToDB();
@@ -25,7 +28,7 @@ export async function fetchUser() {
       return createErrorResponse({ userId: clerkUser.id }, 422);
     }
 
-    const successResponse = {
+    const successResponse: AccountProfileType = {
       _id: user._doc._id,
       id: user._doc.id,
       name: user._doc.name,
