@@ -47,7 +47,7 @@ const InfoBox: FC<{
 
 const Page = () => {
   return (
-    <nav className="w-[250px] flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
+    <nav className="w-[300px] flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
       <div className="flex flex-col gap-[30px]">
         <InfoBox label="Communities">
           {communities.map((item) => (

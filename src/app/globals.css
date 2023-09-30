@@ -118,3 +118,12 @@
 .onboardingForm_input {
   @apply border border-[#00000029];
 }
+
+/* Class groups - Thread */
+.threadForm_group {
+  @apply flex h-full w-full flex-col;
+}
+
+.threadForm_input {
+  @apply border-0 h-full w-full;
+}

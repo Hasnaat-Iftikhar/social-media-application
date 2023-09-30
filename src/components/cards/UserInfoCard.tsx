@@ -37,11 +37,13 @@ const UserInfoCard: FC<{ user: AccountProfileType }> = ({ user }) => {
       <div className="px-[10px] w-full flex flex-col gap-[8px]">
         <div className="flex items-center justify-between">
           <p className="text-[13px] text-gray">Threads</p>
-          <p className="text-[#2e6ce6] text-[13px]">112+</p>
+          <p className="text-[#2e6ce6] text-[13px]">{user.threads.length}</p>
         </div>
         <div className="flex items-center justify-between">
           <p className="text-[13px] text-gray">Communities</p>
-          <p className="text-[#2e6ce6] text-[13px]">10</p>
+          <p className="text-[#2e6ce6] text-[13px]">
+            {user.communities.length}
+          </p>
         </div>
       </div>
 

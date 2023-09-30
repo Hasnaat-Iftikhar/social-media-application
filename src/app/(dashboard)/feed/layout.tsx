@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
 // Components
+import ThreadForm from "@/components/forms/ThreadForm";
 import Container from "@/components/shared/Container";
 import UserInfoCard from "@/components/cards/UserInfoCard";
 import Navbar from "@/components/shared/Navbar";
@@ -37,7 +38,11 @@ export default async function FeedsLayout(props: {
         <Navbar />
         <Container className="flex-1 flex flex-row">
           <UserInfoCard user={user} />
-          <div className="p-[20px] flex-1 h-full">{props.children}</div>
+          <div className="px-[20px] flex-1 h-full flex flex-col gap-[20px]">
+            <ThreadForm user={user} />
+            <div className="w-[94%] h-[1px] mx-auto border-t border-[rgba(0,0,0, 0.1)]"></div>
+            {props.children}
+          </div>
           {props.communities}
         </Container>
       </main>

@@ -46,9 +46,9 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(UserValidation),
     defaultValues: {
-      name: user?.name ? user.name : "",
-      username: user?.username ? user.username : "",
-      bio: user?.bio ? user.bio : "",
+      name: "",
+      username: "",
+      bio: "",
     },
   });
 
