@@ -2,6 +2,8 @@
 
 import { FC } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 // React hook form with zod validation
 import { useForm } from "react-hook-form";
@@ -17,12 +19,17 @@ import { SendHorizontal } from "lucide-react";
 // Types
 import AccountProfileType from "@/lib/types/accountProfile.type";
 
+// Server actions
+import { createThread } from "@/lib/actions/thread.actions";
+
 interface ThreadFormProps {
   user: AccountProfileType;
   className?: string;
 }
 
 const ThreadForm: FC<ThreadFormProps> = ({ user, className = "" }) => {
+  const pathname = usePathname();
+
   const form = useForm<ThreadFormValues>({
     resolver: zodResolver(ThreadValidation),
     defaultValues: {
@@ -31,10 +38,30 @@ const ThreadForm: FC<ThreadFormProps> = ({ user, className = "" }) => {
     },
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (values: ThreadFormValues) => {
+    try {
+      await createThread({
+        text: values.thread,
+        author: user._id,
+        communityId: null,
+        path: pathname,
+      });
+
+      form.reset({
+        thread: "",
+      });
+    } catch (error) {
+      console.log("[ERROR] Unable to create thread", error);
+    }
+  };
 
   return (
-    <div className="bg-white h-[60px] px-[5px] border border-[rgba(0,0,0, 0.1)] flex items-center justify-between rounded-full">
+    <div
+      className={cn(
+        className,
+        "bg-white h-[60px] px-[5px] border border-[rgba(0,0,0, 0.1)] flex items-center justify-between rounded-full"
+      )}
+    >
       <Image
         src={user.image}
         alt={user.name}

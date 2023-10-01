@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 import { currentUser } from "@clerk/nextjs";
 
 // Utils
-import { createErrorResponse } from "../utils";
+import { createResponse } from "../utils";
 
 // Types
 import AccountProfileType from "../types/accountProfile.type";
@@ -19,13 +19,13 @@ export async function fetchUser() {
     const clerkUser = await currentUser();
 
     if (!clerkUser) {
-      return createErrorResponse("User not found", 404);
+      return createResponse(true, { message: "User not found" }, 404);
     }
 
     const user = await User.findOne({ id: clerkUser.id });
 
     if (!user || !user.onboarded) {
-      return createErrorResponse({ userId: clerkUser.id }, 422);
+      return createResponse(true, { userId: clerkUser.id }, 422);
     }
 
     const successResponse: AccountProfileType = {
@@ -41,10 +41,7 @@ export async function fetchUser() {
       onboarded: user._doc.onboarded,
     };
 
-    return new Response(JSON.stringify(successResponse), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return createResponse(false, successResponse, 200);
   } catch (error: any) {
     throw new Error(`Failed to fetch user: ${error.message}`);
   }

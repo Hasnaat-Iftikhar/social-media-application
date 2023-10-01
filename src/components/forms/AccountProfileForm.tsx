@@ -31,6 +31,9 @@ import { Loader, User2 } from "lucide-react";
 // Types
 import AccountProfileType from "@/lib/types/accountProfile.type";
 
+// Routes
+import ROUTES from "@/constants/routes";
+
 interface PropTypes {
   user: AccountProfileType | { id: string };
   buttonText: string;
@@ -65,7 +68,7 @@ const AccountProfileForm: FC<PropTypes> = ({ user, buttonText }) => {
     if (pathname === "/profile/edit") {
       router.back();
     } else {
-      router.push("/feeds");
+      router.push(ROUTES.FEED);
     }
   }
 

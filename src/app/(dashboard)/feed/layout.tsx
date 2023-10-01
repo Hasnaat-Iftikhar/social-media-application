@@ -30,7 +30,8 @@ export default async function FeedsLayout(props: {
   communities: ReactNode;
 }) {
   const res = await fetchUser();
-  const user: AccountProfileType = await res.json();
+  const resJson = await res.json();
+  const user: AccountProfileType = resJson.data;
 
   if (res.status === 200) {
     return (
